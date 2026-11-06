@@ -1940,6 +1940,109 @@ main .section-head .lead{margin-top:10px}
     카카오톡 상담
   </a>
 </div>
+    
+<!-- GEUMSEO METAL : TOP 이동 버튼 -->
+<style>
+  #gsBackToTop {
+    position: fixed;
+    right: 18px;
+    bottom: calc(100px + env(safe-area-inset-bottom));
+    width: 46px;
+    height: 46px;
+    z-index: 10001;
+
+    display: grid;
+    place-items: center;
+    border: 1px solid #a58050;
+    border-radius: 14px;
+    background: rgba(30, 31, 29, 0.96);
+    color: #e4c79d;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity .25s ease,
+                transform .25s ease,
+                visibility .25s ease;
+  }
+
+  #gsBackToTop.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  #gsBackToTop:hover {
+    background: #39342c;
+  }
+
+  #gsBackToTop:focus-visible {
+    outline: 2px solid #e4c79d;
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 768px) {
+    #gsBackToTop {
+      right: 26px;
+      bottom: 26px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #gsBackToTop { transition: none; }
+  }
+</style>
+
+<button id="gsBackToTop" type="button"
+        aria-label="페이지 맨 위로 이동"
+        title="맨 위로">
+  <svg width="22" height="22"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="currentColor"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       aria-hidden="true">
+    <path d="m6 14 6-6 6 6"/>
+  </svg>
+</button>
+
+<script>
+(function () {
+  const topButton = document.getElementById("gsBackToTop");
+
+  function updateTopButton() {
+    topButton.classList.toggle(
+      "visible",
+      window.scrollY > 280
+    );
+  }
+
+  window.addEventListener("scroll", updateTopButton, {
+    passive: true
+  });
+  window.addEventListener("pageshow", updateTopButton);
+
+  topButton.addEventListener("click", function () {
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    window.scrollTo({
+      top: 0,
+      behavior: reducedMotion ? "instant" : "smooth"
+    });
+  });
+
+  updateTopButton();
+})();
+</script>
+
 </body>
 </html>
 
